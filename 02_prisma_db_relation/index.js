@@ -2,6 +2,8 @@ import express from 'express'
 import cookieparser from 'cookie-parser'
 import dotenv from "dotenv"
 
+import userRouter from "./routes/userRoutes.js";
+
 dotenv.config({
     path:'./.env'
 })
@@ -14,6 +16,8 @@ app.use(express.urlencoded({extended:true}))
 
 // cookie middleware
 app.use(cookieparser())
+
+app.use('/api',userRouter)
 
 app.get('/',(req,res)=>{
     res.send('Learning prisma with mongodb')
