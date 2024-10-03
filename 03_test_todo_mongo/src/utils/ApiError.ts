@@ -1,6 +1,3 @@
-
-
-
 class ApiError extends Error {
     statusCode: Number;
     data: null;
@@ -27,3 +24,4 @@ class ApiError extends Error {
         }
     }
 }
+export {ApiError}
