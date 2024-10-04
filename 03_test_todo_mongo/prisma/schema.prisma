@@ -14,27 +14,30 @@ datasource db {
 }
 
 model User {
-  id                  String @id @default(auto()) @map("_id") @db.ObjectId
-  email               String @unique
+  id                  String  @id @default(auto()) @map("_id") @db.ObjectId
+  email               String  @unique
   userName            String
   firstName           String
   lastName            String
   password            String
-  refreshToken        String
-  countOfRefreshToken Int
+  refreshToken        String?
+  countOfRefreshToken Int?
   task                Task[]
 }
 
 model Task {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  isCompleted Boolean    @default(false)
-  type        String
-  title       String
-  body        String
-  status      String
-  category    Category[]
-  author      User       @relation(fields: [authorId], references: [id])
-  authorId    String     @db.ObjectId
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  isCompleted  Boolean    @default(false)
+  type         String
+  title        String
+  body         String
+  status       String
+  category     Category[]
+  author       User       @relation(fields: [authorId], references: [id])
+  authorId     String     @db.ObjectId
+  deadlineDate DateTime   @default(now())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 }
 
 model Category {
