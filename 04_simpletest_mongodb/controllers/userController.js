@@ -27,11 +27,13 @@ const signup = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    console.log(email, password);
+
     if (!email || !password) {
       throw new Error("Please provide email and password");
     }
     // find user
-    const user =await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         email,
       },
@@ -59,5 +61,48 @@ const logout = async (req, res, next) => {
     throw new Error(error);
   }
 };
+// const userDetails = async (req, res, next) => {
+//   try {
+//     console.log("REQ :", req);
 
-export { signup, login, logout };
+//     console.log("req.params", req.params);
+
+//     const { email } = req.params.email;
+//     console.log("email", email);
+
+//     const user = await prisma.user.findUnique({
+//       where: {
+//         email,
+//       },
+//       select: {
+//         email: true,
+
+//         post: true,
+//         name: true,
+//       },
+//     });
+//     console.log(user);
+
+//     res.status(200).json({ data: user });
+//   } catch (error) {
+//     throw new Error("Unable to find user.Try it again! userDetails", error);
+//   }
+// };
+
+const getAllusers = async (req, res, next) => {
+  try {
+    const allUsers = await prisma.user.findMany({
+      select: {
+        email: true,
+        name: true,
+        posts: true,
+      },
+    });
+    console.log("all user details", allUsers);
+    res.status(200).json({ allUsers });
+  } catch (error) {
+    throw new Error("Unable to find user.Try it again!", error);
+  }
+};
+
+export { signup, login, logout, getAllusers };

@@ -8,6 +8,7 @@ dotenv.config({
 });
 
 const app = express();
+const port = process.env.PORT || 3000
 
 app.use(express.json());
 app.use(express.urlencoded({ extends: true }));
@@ -18,8 +19,8 @@ app.get("/", (req, res) => {
   res.send("Hi from test prisma live");
 });
 
-app.use("/api", userRouter);
+app.use("/api/users", userRouter);
 
-app.listen(3000, () => {
-  console.log("server is running on port 3000");
+app.listen(port, () => {
+  console.log(`server is running on port ${port}`);
 });
