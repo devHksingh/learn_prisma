@@ -61,33 +61,38 @@ const logout = async (req, res, next) => {
     throw new Error(error);
   }
 };
-// const userDetails = async (req, res, next) => {
-//   try {
-//     console.log("REQ :", req);
+const userDetails = async (req, res, next) => {
+  try {
+    // Log the request and params
+    // console.log("REQ :", req);
+    console.log("req.params", req.params);
 
-//     console.log("req.params", req.params);
+    // Get the email from req.params
+    const userEmail = req.params.email; // No need to access 'email' from userEmail, it's already the email
+    console.log("userEmail", userEmail);
 
-//     const { email } = req.params.email;
-//     console.log("email", email);
+    // Query the user based on email
+    const user = await prisma.user.findUnique({
+      where: {
+        email: userEmail,  // Use the email directly from req.params
+      },
+      select: {
+        email: true,
+        name:true
+        
+      },
+    });
 
-//     const user = await prisma.user.findUnique({
-//       where: {
-//         email,
-//       },
-//       select: {
-//         email: true,
+    // If user is found, send response
+    console.log(user);
+    res.status(200).json({ data: user });
 
-//         post: true,
-//         name: true,
-//       },
-//     });
-//     console.log(user);
-
-//     res.status(200).json({ data: user });
-//   } catch (error) {
-//     throw new Error("Unable to find user.Try it again! userDetails", error);
-//   }
-// };
+  } catch (error) {
+    console.error(error);
+    // Return error in case of failure
+    res.status(500).send(error);
+  }
+};
 
 const getAllusers = async (req, res, next) => {
   try {
@@ -105,4 +110,4 @@ const getAllusers = async (req, res, next) => {
   }
 };
 
-export { signup, login, logout, getAllusers };
+export { signup, login, logout, getAllusers, userDetails };
