@@ -9,6 +9,7 @@ import Login from './pages/Login.jsx'
 import SignUp from './pages/SignUp.jsx'
 import ErrorPage from './ErrorPage.jsx'
 import LongBtn from './components/LongBtn.jsx'
+import ThemeComp from './components/ThemeComp.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
       <Route path='login' element={<Login/>}/>
       <Route path='signup' element={<SignUp/>}/>
       <Route path='longBtn' element={<LongBtn/>}/>
+      <Route path='themeComp' element={<ThemeComp/>}/>
     </Route>
   )
 )
